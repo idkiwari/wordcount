@@ -1,4 +1,49 @@
 :host {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  background-color: #1c2e4a;
+}
+
+:host :first-child, :host :last-child  {
+  flex-grow: 1;
+  margin: .5rem;
+  height: calc(100% - 1rem);
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+}
+
+:host :first-child :first-child, :host :last-child :first-child{
+  padding: .5rem;
+}
+
+:host :first-child {
+  margin-right: .25rem;
+}
+
+:host :last-child {
+  margin-left: .25rem;
+}
+
+:host :nth-child(2) {
+  margin-right: -3.25rem;
+  margin-left: -3.25rem;
+  background-color: #d4af47;
+  z-index: 2;
+  width: 5rem;
+  padding: .5rem;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bolder;
+  transition: all 0.5s ease;
+  border-radius: .5rem;
+}
+
+:host :nth-child(2):hover{
+  background-color: #ffdf00;
+}
+
+:host :nth-child(2):active{
+  background-color: #996515;
 }
