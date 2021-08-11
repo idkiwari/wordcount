@@ -1,7 +1,8 @@
-package com.resilient.stream.json;
+package com.resilient.stream.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.resilient.stream.Flow;
 import com.resilient.stream.Server;
 import com.resilient.stream.http.request.method.Get;
@@ -13,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -32,10 +33,16 @@ public class Application {
       .when(new Get("/*").with((s, m, p) -> new File("static","/".equals(p)? "index.html": p).exists()))
       .then((ctx, r) -> new Static(new File("static","/".equals(ctx.path().plain())? "index.html": ctx.path().plain())));
 
-    new Flow(server).when(new Post("/execute")).as(Map.class).then(map -> {
+    new Flow(server).when(new Post("/execute")).as(Map.class, String.class).then(map -> {
       try {
-        String value = ((String) map.get("value")).trim();
-        return gson.toJson(gson.fromJson(value, StringUtils.startsWith(value, "[")? List.class: Map.class));
+        String text = (String) map.get("value");
+        String[] words = text.replaceAll("[.,;]", " ").split("\\s+");
+        Map<String, Integer> wordCount = new HashMap<>();
+        for (String word: words){
+          if (wordCount.containsKey(word.toLowerCase())) wordCount.put(word.toLowerCase(), wordCount.get(word.toLowerCase()) + 1);
+          else wordCount.put(word.toLowerCase(), 1);
+        }
+        return gson.toJson(wordCount).replaceAll("[{\" \t,}]", "").replace(":", ": ").trim();
       } catch (Exception e) {
         throw new Alternate(200, e.getMessage());
       }

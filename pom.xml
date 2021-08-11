@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.resilent.stream</groupId>
-    <artifactId>json</artifactId>
+    <artifactId>wordcount</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
@@ -41,7 +41,7 @@
                 <addClasspath>true</addClasspath>
                 <classpathPrefix>libs/</classpathPrefix>
                 <mainClass>
-                  com.resilient.stream.json.Application
+                  com.resilient.stream.util.Application
                 </mainClass>
               </manifest>
             </archive>
@@ -53,7 +53,7 @@
         <dependency>
             <groupId>com.resilient.stream</groupId>
             <artifactId>flow</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
 
